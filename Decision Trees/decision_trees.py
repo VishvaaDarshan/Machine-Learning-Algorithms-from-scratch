@@ -52,3 +52,24 @@ class DecisionTree:
         left = self.build_tree(*split_info["left"], depth + 1, max_depth)
         right = self.build_tree(*split_info["right"], depth + 1, max_depth)
         return Node(feature=split_info["feature"], threshold=split_info["threshold"], left=left, right=right)
+
+    def predict_tree(self, node, X):
+        if node.value is not None:
+            return node.value
+        if X[node.feature] <= node.threshold:
+            return self.predict_tree(node.left, X)
+        else:
+            return self.predict_tree(node.right, X)
+
+    def fit(self, X, y):
+        self.tree = self.build_tree(X, y)
+
+    def predict(self, X):
+        return [self.predict_tree(self.tree, x) for x in X]
+
+# Example usage
+X = np.array([[2, 3], [1, 1], [3, 2], [7, 8], [8, 8], [9, 9]])
+y = np.array([0, 0, 0, 1, 1, 1])
+model = DecisionTree()
+model.fit(X, y)
+print("Predicted value for [5, 5]:", model.predict(np.array([[5, 5]])))
