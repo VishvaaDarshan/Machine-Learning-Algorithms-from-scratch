@@ -29,3 +29,5 @@ model = LogisticRegression()
 model.fit(X, y)
 print("Predicted value for [3.5]:", model.predict(np.array([[3.5]])))
 print("Predicted value for [4.5]:", model.predict(np.array([[4.5]])))
+
+
