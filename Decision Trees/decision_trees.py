@@ -48,3 +48,7 @@ class DecisionTree:
         if not split_info:
             leaf_value = Counter(y).most_common(1)[0][0]
             return Node(value=leaf_value)
+        
+        left = self.build_tree(*split_info["left"], depth + 1, max_depth)
+        right = self.build_tree(*split_info["right"], depth + 1, max_depth)
+        return Node(feature=split_info["feature"], threshold=split_info["threshold"], left=left, right=right)
