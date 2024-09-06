@@ -23,6 +23,16 @@ class KneargestNeighbouts:
             predictions.append(most_common[0][0])
         return predictions
     
+    def predict2(self, X):
+        predictions = []
+        for x in X:
+            distances = [self.euclidean_distance(x, x_train) for x_train in self.X_train]
+            k_indices = np.argsort(distances)[:self.k]  
+            k_nearest_labels = [self.y_train[i] for i in k_indices]
+            most_common = Counter(k_nearest_labels).most_common(1)
+            predictions.append(most_common[0][0])
+        return predictions
+    
 # Example usage
 
 X_train  = np.array([[1, 2], [1.5, 1.8], [5, 8], [8, 8], [1, 0.6], [9, 11]])
